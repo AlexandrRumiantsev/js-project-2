@@ -45,3 +45,76 @@ arrayRoomsImg.forEach(function(pathToImg){
     // Добавляем созданную ссылку в полученый элемент
     containerRoomSelector.appendChild(link);
 })
+
+//Реализация фильтра для моделирования кроватей в приложении
+// Шаг 1 Получим элемент на верстке в который мы будем генерировать наш фильтр с выбором кровати
+let beds = document.getElementsByClassName('btn-container__change-bed');
+// Шаг 2 Завести массив с путями к изображениям
+let pathToBedImg = new Array(
+    "./img/bed/1.png", 
+    "./img/bed/2.png", 
+    "./img/bed/3.png"
+);
+// Промежуточный шаг. Написание функции клика для отрисовки кровати на основном экране
+function render(){
+    //Через объект event получили ссылку на нужную кровать (по которой кликнули)
+    let link = event.target.dataset.link
+    //Получим через дата атрибут, тип фильтра, в который добавляет картинки
+    let type = event.target.dataset.type
+    // Получить элемент в который мы перемещаем, выбранную картинку
+    let bedBlock = document.querySelector(`.room__${type}`);
+    // Установить картинку в полученном элементе
+    bedBlock.style.backgroundImage = `url('${link}')`;
+
+}
+// Шаг 3 Переберем массив с путями к изображениям кроватей c помощью for
+for(let i = 0; i < pathToBedImg.length; i++) {
+    console.log('Итерация номер = ' + i);
+    //Получаем перебираемый путь внутри for
+    console.log('Полученый путь в массиве pathToBedImg: ' + pathToBedImg[i]);
+    //Создадим элемент с помощью шаблонной строки строки
+    let linkBed = `
+        <a 
+            class="option-item" 
+            data-link="${pathToBedImg[i]}" 
+            data-type="bed" 
+            style="background-image: url(${pathToBedImg[i]});"
+            onClick="render()"
+        >
+        </a>
+    `;
+    console.log(linkBed);
+    //Добавить созданную ссылку c помощью innerHTML
+    beds[0].innerHTML += linkBed;
+}
+
+// Фильтр для добавления шкафов на верстку
+
+//Получи элемент, в котором будет распологатся фильт
+let changeCabinet = document.querySelector("section.btn-container__change-cabinet");
+
+//Завести массив с изображениями
+let arrayCabinet = [];
+//Добавляем (пушим) значение (пути к картинкам в массив)
+arrayCabinet.push("./img/cabinet/1.png");
+arrayCabinet.push("./img/cabinet/2.png");
+console.log(arrayCabinet);
+
+// Переберем созданный массив с помощью цикла for of
+// https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/for...of
+for(let cabinet of arrayCabinet) {
+    //Перебираемый элемент
+    console.log(cabinet);
+    let linkCabinet = `
+        <a 
+            class="option-item" 
+            data-link="${cabinet}" 
+            data-type="cabinet" 
+            style="background-image: url(${cabinet});"
+            onClick="render()"
+        >
+        </a>
+    `;
+    //Добавим ссылку в фильтр
+    changeCabinet.innerHTML += linkCabinet;
+}
