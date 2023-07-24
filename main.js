@@ -118,3 +118,64 @@ for(let cabinet of arrayCabinet) {
     //Добавим ссылку в фильтр
     changeCabinet.innerHTML += linkCabinet;
 }
+
+//Блок с передвижением элементоа
+
+//Получить селект, который выбирает, какой элемент будет перемещатся
+let containerMove = document.querySelector('.btn-container__move');
+let elementMove;
+//установить событие, которое будет отлавливать изменение селектора и заставлять отрпбатывать опеределенную функцию
+//https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+containerMove.addEventListener('change', function(event){
+    console.log('Элемент изменился',event.target.value)
+    //Получили элемент по нэйму и записали в переменную выше для передачи в соседнюю функцию
+    elementMove = `.room__${event.target.value}`;
+    
+})
+
+//ДЗ оптиизировать функцию, чтобы было меньше строчек кода
+function move(toMoveElement){
+    let element = document.querySelector(elementMove);
+    console.log('Двигаем элемент', element.style.bottom);
+    let nowPoints 
+
+    switch(toMoveElement) {
+        case 'top': 
+            if (element.style.bottom) {
+                nowPoints = parseInt(element.style.bottom) + 5;
+                console.log('nowPoints', nowPoints);
+            } else {
+                nowPoints = 0;
+            }
+            element.style.bottom = nowPoints + 'px'; 
+        break;
+        case 'bottom':
+            if (element.style.bottom) {
+                nowPoints = parseInt(element.style.bottom) - 5;
+                console.log('nowPoints', nowPoints);
+            } else {
+                nowPoints = 0;
+            }
+            element.style.bottom = nowPoints + 'px'; 
+        break;   
+        case 'left':
+            if (element.style.left) {
+                nowPoints = parseInt(element.style.left) - 5;
+                console.log('nowPoints', nowPoints);
+            } else {
+                nowPoints = 0;
+            }
+            element.style.left = nowPoints + 'px'; 
+        break;
+        case 'right':
+            if (element.style.left) {
+                nowPoints = parseInt(element.style.left) + 5;
+                console.log('nowPoints', nowPoints);
+            } else {
+                nowPoints = 0;
+            }
+            element.style.left = nowPoints + 'px'; 
+        break; 
+    }
+    
+}
